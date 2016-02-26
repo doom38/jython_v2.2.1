@@ -7123,7 +7123,8 @@ public class PythonGrammar/*@bgen(jjtree)*/implements PythonGrammarTreeConstants
       if (tok != null) jj_add_error_token(kind, i);
     }
     if (jj_scanpos.kind != kind) return true;
-    if (jj_la == 0 && jj_scanpos == jj_lastpos) throw jj_ls;
+    //if (jj_la == 0 && jj_scanpos == jj_lastpos) throw jj_ls;
+    //
     return false;
   }
 

@@ -3,6 +3,9 @@ package org.python.core;
 
 /**
  * A builtin python string.
+ * 
+ * Override this class to correct a bug in conversion method
+ * toBytes(String) see line 2032
  */
 public class PyString extends PyBaseString implements ClassDictInit
 {
@@ -2027,10 +2030,13 @@ public class PyString extends PyBaseString implements ClassDictInit
      *         the low-order bits of its corresponding char.
      */
     public static byte[] to_bytes(String s) {
-        int len = s.length();
-        byte[] b = new byte[len];
-        s.getBytes(0, len, b, 0);
-        return b;
+//     Original code:
+//        int len = s.length();
+//        byte[] b = new byte[len];
+//        s.getBytes(0, len, b, 0);
+//    	return b;
+// -------------------------------
+        return s.getBytes();
     }
 
     /**

@@ -5,6 +5,9 @@ import java.io.Serializable;
 
 /**
  * A builtin python float.
+ * 
+ * The float__cmp__() method is modified to fix a bug with NaN value.
+ * Now, when checking the equality of the object with another one, false is returned if only one of them have a NaN value
  */
 
 public class PyFloat extends PyObject
@@ -662,10 +665,15 @@ public class PyFloat extends PyObject
         return float___cmp__(other);
     }
 
+    // a numerical value compared to a NaN value must not return equal
     final int float___cmp__(PyObject other) {
         if (!canCoerce(other))
              return -2;
         double v = coerce(other);
+        if (Double.isNaN(v) && !Double.isNaN(value)
+                || Double.isNaN(value) && !Double.isNaN(v)) {
+            return 1;
+        }
         return value < v ? -1 : value > v ? 1 : 0;
     }
 
