@@ -114,7 +114,8 @@
 	<!-- 
 		Performs Maven build staging
 	-->
-	<target name="stage" depends="validate-pom">
+	<target name="stage" >
+		<!-- depends="validate-pom"-->
 		<property name="stage" value="${build}/"/>
 		<mkdir dir="${stage}"/>
 		
@@ -130,6 +131,12 @@
 			file="${dist.base}/jython.jar"
 			tofile="${stage}/${m2.artifactId}-${project.version}.jar"/>
 		
+		<jar update="true" destfile="${stage}/${m2.artifactId}-${project.version}.jar">
+		  <fileset dir="${dist.base}">
+		    <include name="Lib/**/*"/>
+		  </fileset>
+		</jar>
+
 		<jar jarfile="${stage}/${m2.artifactId}-${project.version}-sources.jar">
 			<fileset dir="${src.dir}" includes="**/*.java"/>
 		</jar>
